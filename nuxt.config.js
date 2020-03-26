@@ -4,6 +4,9 @@ module.exports = {
   /*
   ** Headers of the page
   */
+  server: {
+    port: 2000
+  },
   head: {
     title: process.env.npm_package_name || '',
     meta: [
@@ -48,7 +51,7 @@ module.exports = {
     /*
     ** You can extend webpack config here
     */
-    extend (config, ctx) {
+    extend(config, ctx) {
     }
   }
 }
