@@ -75,7 +75,7 @@
   font-size: 25px;
 }
 
-.ivu-input {
+#formLogin .ivu-input {
   border-radius: 30px !important;
   padding: 2em 1em;
   /* border-color: #dc050e; */
@@ -104,8 +104,15 @@
   .lg-f-52 {
     font-size: 52px;
   }
+  .lg-mt-30 {
+    margin-top: 30px;
+  }
 }
 
 .float {
   z-index: 10000;
+}
+
+.ivu-select-selection {
+  border-radius: 30px;
 }
