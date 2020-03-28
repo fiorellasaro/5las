@@ -6,7 +6,7 @@
       <Form ref="formInline" :model="formInline" :rules="ruleInline" row>
         <FormItem prop="user">
           <Input type="text" v-model="formInline.user" placeholder="Nombre y apellidos">
-            <Icon type="ios-person-outline" slot="prepend"></Icon>
+            <Icon type="ios-person-outline" slot="prepend" ></Icon>
           </Input>
         </FormItem>
         <FormItem prop="identityDoc">
@@ -142,7 +142,7 @@ export default {
 };
 </script>
 
-<style >
+<style scoped>
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,500,600,900&display=swap");
 
 .margin-45 {
