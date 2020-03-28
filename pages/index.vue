@@ -10,8 +10,8 @@
     <br />
     <br />
 
-    <Row type="flex" justify="space-around" align="bottom">
-      <Col :xs="22" :sm="14" :md="6" :lg="4">
+    <Row type="flex" justify="center" align="bottom">
+      <Col :xs="22" :sm="16" :md="10" :lg="6">
         <Button class="mt-50 f-mont" @click="start">EMPECEMOS</Button>
       </Col>
     </Row>
