@@ -1,20 +1,12 @@
 <template>
   <div class="bg-red full">
-    <Row type="flex" justify="space-around" align="middle">
-      <Col :xs="12" :sm="4" :md="4" :lg="3">
-        <Logo class="mt-50"></Logo>
-      </Col>
-    </Row>
     <br />
     <br />
     <br />
     <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
+
+    <Logo></Logo>
+
     <br />
     <br />
     <br />
@@ -27,7 +19,7 @@
     <br />
     <br />
     <Row type="flex" justify="center" align="bottom">
-        <p class="f-white semi-bold f-mont">#YoMeQuedoEnCasa</p>
+      <p class="f-white semi-bold f-mont">#YoMeQuedoEnCasa</p>
     </Row>
   </div>
 </template>
