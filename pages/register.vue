@@ -1,47 +1,82 @@
 <template>
   <Row type="flex" justify="center" class="code-row-bg">
-    <Col :xs="22" :lg="10">
-      <Icon type="md-arrow-back" class="margin-45" size="30" />
-      <h1 class="title">Necesitamos algunos datos para crear tu cuenta</h1>
-      <Form ref="formInline" :model="formInline" :rules="ruleInline" row>
-        <FormItem prop="user">
-          <Input type="text" v-model="formInline.user" placeholder="Nombre y apellidos">
-            <Icon type="ios-person-outline" slot="prepend" ></Icon>
-          </Input>
-        </FormItem>
-        <FormItem prop="identityDoc">
-          <Input type="text" v-model="formInline.identityDoc" placeholder="DNI/CE">
-            <Icon type="ios-card-outline" slot="prepend" />
-          </Input>
-        </FormItem>
-        <FormItem prop="address">
-          <Input type="text" v-model="formInline.address" placeholder="Dirección">
-            <Icon type="ios-pin-outline" slot="prepend" />
-          </Input>
-        </FormItem>
-        <FormItem prop="email">
-          <Input v-model="formInline.email" placeholder="Correo">
-            <Icon type="ios-mail-outline" slot="prepend" />
-          </Input>
-        </FormItem>
-        <FormItem prop="password">
-          <Input type="password" v-model="formInline.password" placeholder="Contraseña">
-            <Icon type="ios-lock-outline" slot="prepend"></Icon>
-          </Input>
-        </FormItem>
-        <FormItem prop="confirmPassword">
-          <Input
-            type="password"
-            v-model="formInline.confirmPassword"
-            placeholder="Confirmar contraseña"
+    <Col :xs="22" :lg="24">
+      <Row>
+        <Col :xs="24" :lg="{ span: 1, offset: 1 }">
+          <nuxt-link to="/" class="f-black"
+            ><Icon type="md-arrow-back" class="margin-45" size="30"
+          /></nuxt-link>
+        </Col>
+        <Col :xs="24" :lg="{ span: 10, offset: 5 }" class="lg-mt-30">
+          <h1 class="title">Necesitamos algunos datos para crear tu cuenta</h1>
+          <Form
+            id="form-register"
+            ref="formInline"
+            :model="formInline"
+            :rules="ruleInline"
+            row
           >
-            <Icon type="ios-lock-outline" slot="prepend"></Icon>
-          </Input>
-        </FormItem>
-        <FormItem>
-          <Button class="margin-27" type="primary" @click="handleSubmit('formInline')">CREAR CUENTA</Button>
-        </FormItem>
-      </Form>
+            <FormItem prop="user">
+              <Input
+                type="text"
+                v-model="formInline.user"
+                placeholder="Nombre y apellidos"
+              >
+                <Icon size="20" type="ios-person-outline" slot="prepend"></Icon>
+              </Input>
+            </FormItem>
+            <FormItem prop="identityDoc">
+              <Input
+                type="text"
+                v-model="formInline.identityDoc"
+                placeholder="DNI/CE"
+              >
+                <Icon size="20" type="ios-card-outline" slot="prepend" />
+              </Input>
+            </FormItem>
+            <FormItem prop="address">
+              <Input
+                type="text"
+                v-model="formInline.address"
+                placeholder="Dirección"
+              >
+                <Icon size="20" type="ios-pin-outline" slot="prepend" />
+              </Input>
+            </FormItem>
+            <FormItem prop="email">
+              <Input v-model="formInline.email" placeholder="Correo">
+                <Icon size="20" type="ios-mail-outline" slot="prepend" />
+              </Input>
+            </FormItem>
+            <FormItem prop="password">
+              <Input
+                type="password"
+                v-model="formInline.password"
+                placeholder="Contraseña"
+              >
+                <Icon size="20" type="ios-lock-outline" slot="prepend"></Icon>
+              </Input>
+            </FormItem>
+            <FormItem prop="confirmPassword">
+              <Input
+                type="password"
+                v-model="formInline.confirmPassword"
+                placeholder="Confirmar contraseña"
+              >
+                <Icon size="20" type="ios-lock-outline" slot="prepend"></Icon>
+              </Input>
+            </FormItem>
+            <FormItem>
+              <Button
+                class="margin-27"
+                type="success"
+                @click="handleSubmit('formInline')"
+                >CREAR CUENTA</Button
+              >
+            </FormItem>
+          </Form>
+        </Col>
+      </Row>
     </Col>
   </Row>
 </template>
@@ -89,13 +124,11 @@ export default {
             trigger: "blur"
           }
         ],
-        confirmPassword: [
-          { validator: validatePassCheck, trigger: "blur" }
-        ],
+        confirmPassword: [{ validator: validatePassCheck, trigger: "blur" }],
         identityDoc: [
           {
             required: true,
-            message: "Por favor, ingrese el Nº de su documento de identidad",
+            message: "Por favor, ingrese el Nº de su documento",
             trigger: "blur"
           },
           {
@@ -132,9 +165,10 @@ export default {
     handleSubmit(name) {
       this.$refs[name].validate(valid => {
         if (valid) {
-          this.$Message.success("Success!");
+          this.$Message.success("Bienvenido a 5las!");
+          this.$router.push({ path: "where" });
         } else {
-          this.$Message.error("Fail!");
+          this.$Notice.error({ title: "Revise los datos ingresados" });
         }
       });
     }
@@ -142,16 +176,25 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+@import "../assets/style.css";
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,500,600,900&display=swap");
 
+#form-register .ivu-input {
+  color: #fff !important;
+  box-sizing: border-box;
+  border-top-right-radius: 30px !important;
+  border-bottom-right-radius: 30px;
+  /* border-left: 1px solid transparent; */
+  padding: 2em 1em;
+}
 .margin-45 {
   margin-top: 10px;
   margin-bottom: 45px !important;
 }
 
-.margin-27{
-    margin-top: 27px;
+.margin-27 {
+  margin-top: 27px;
 }
 
 .title {
@@ -167,4 +210,30 @@ export default {
   color: #000000;
   margin-bottom: 45px;
 }
+#form-register .ivu-input-group-prepend {
+  /* border: 1px solid #00dfc4; */
+  border-right: none;
+  background-color: transparent !important;
+  box-sizing: border-box;
+  border-radius: 30px;
+  border-left: none;
+  color: black;
+  /* padding: 0 2px !important; */
+}
+
+#form-register .ivu-input-group-prepend .ivu-icon {
+  padding-left: 5px !important;
+}
+
+.f-black:hover {
+  color: #dc050e !important;
+}
+
+/* #form-register .ivu-input-group-prepend:hover,
+#form-register .ivu-input-group-prepend:focus,
+#form-register .ivu-input-group-prepend:active {
+  border-color: #dc050e;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+} */
 </style>

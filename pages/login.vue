@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section id="formLogin">
     <Row type="flex" justify="center" align="middle" class="min-h">
       <Col :xs="{ span: 22 }" :lg="{ span: 22 }">
         <Row>
@@ -11,7 +11,7 @@
           </Col>
 
           <Col :xs="{ span: 24 }" :lg="{ span: 12 }">
-            <p class="font-25 f-black">Ingresa</p>
+            <p class="font-25">Ingresa</p>
             <br />
             <Form ref="loginForm" :model="loginForm" :rules="loginFormValidate">
               <Row type="flex" justify="center">
@@ -57,11 +57,13 @@
               <br />
               <br />
               <Row type="flex" justify="center">
-                <Col :xs="13" :lg="13" class="f-black f-center">
-                  <p class="f-black">¿Aún no tienes cuenta?</p>
+                <Col :xs="13" :lg="13" class="f-center">
+                  <p>¿Aún no tienes cuenta?</p>
                 </Col>
                 <Col :xs="13" :lg="13" class="f-black f-center">
-                  <p class="semi-bold">Regístrate</p>
+                  <nuxt-link to="/register" class="semi-bold f-black"
+                    >Regístrate</nuxt-link
+                  >
                 </Col>
               </Row>
             </Form>
@@ -86,19 +88,19 @@ export default {
         email: [
           {
             required: true,
-            message: "Por favor, ingrese su email",
+            message: "Ingrese su email",
             trigger: "blur"
           },
           {
             type: "email",
-            message: "Por favor, ingrese un email válido",
+            message: "Ingrese un email válido",
             trigger: "blur"
           }
         ],
         password: [
           {
             required: true,
-            message: "Por favor, ingrese su clave",
+            message: "Ingrese su clave",
             trigger: "blur"
           },
           {
@@ -115,7 +117,7 @@ export default {
     start(name) {
       this.$refs[name].validate(valid => {
         if (valid) {
-          this.$Message.success("Success!");
+          this.$Message.success("Bienvenido a 5las!");
         } else {
           this.$Notice.error({ title: "Revise los datos ingresados" });
         }
