@@ -1,11 +1,11 @@
 <template>
   <div class="login-logo">
     <bounce-loader
-      class="fixed"
+      class="static"
       :color="color"
       :size="size"
     ></bounce-loader>
-    <img class="absolute " src="../assets/icons/logo-white.png" />
+    <img class="z-index-3" src="../assets/icons/logo-white.png" />
   </div>
 </template>
 <script>
@@ -25,16 +25,19 @@ export default {
 };
 </script>
 <style>
-.fixed {
-  position: fixed;
+.static {
+  position: static;
+  float: left;
 }
-.absolute {
+.z-index-3 {
   z-index: 3;
+  position: absolute;
 }
 
 .login-logo{
   display: flex;
   justify-content: center;
   align-items: center;
+  align-content: center;
 }
 </style>
