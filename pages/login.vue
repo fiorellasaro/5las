@@ -6,7 +6,7 @@
           <Col class="float" :xs="{ span: 24 }" :lg="{ span: 12 }">
             <p class="font-25 lg-f-white lg-f-52">
               <br />
-              Bienvenido a <br /><span class="semi-bold">5las</span>
+              Bienvenid@ a <br /><span class="semi-bold">5las</span>
             </p>
           </Col>
 
