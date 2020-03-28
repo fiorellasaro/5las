@@ -53,4 +53,9 @@ export default {
 </script>
 <style>
 @import "../assets/style.css";
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,500,600,900&display=swap");
+
+* {
+  font-family: "Montserrat" ;
+}
 </style>
