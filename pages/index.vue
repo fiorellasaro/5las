@@ -23,14 +23,14 @@
     <br />
     <Row type="flex" justify="space-around" align="bottom">
       <Col :xs="16" :sm="14" :md="6" :lg="4">
-        <Button class="mt-50" @click="start">EMPECEMOS</Button>
+        <Button class="mt-50 f-mont" @click="start">EMPECEMOS</Button>
       </Col>
     </Row>
     <br />
     <br />
     <Row type="flex" justify="center" align="bottom">
       <Col :xs="16" :sm="14" :md="6" :lg="4">
-        <p class="f-white ml-4 semi-bold">#YoMeQuedoEnCasa</p>
+        <p class="f-white ml-4 semi-bold f-mont">#YoMeQuedoEnCasa</p>
       </Col>
     </Row>
   </div>
@@ -55,7 +55,8 @@ export default {
 @import "../assets/style.css";
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,500,600,900&display=swap");
 
-* {
-  font-family: "Montserrat" ;
+
+.f-mont{
+   font-family: "Montserrat" ;
 }
 </style>
