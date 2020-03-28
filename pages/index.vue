@@ -57,6 +57,6 @@ export default {
 
 
 .f-mont{
-   font-family: "Montserrat" ;
+   font-family: "Montserrat" !important;
 }
 </style>
