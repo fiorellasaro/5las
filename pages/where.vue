@@ -7,27 +7,19 @@
             <img src="../assets/icons/img.png" class="circle" />
           </Col>
 
-          <Col class="f-white  f-em m-auto">
-            <span class="semi-bold">Luis Delgado</span><br />
-            <span>Lima - Barranco</span></Col
-          >
+          <Col class="f-white f-em m-auto">
+            <span class="semi-bold">Luis Delgado</span>
+            <br />
+            <span>Lima - Barranco</span>
+          </Col>
         </Row>
       </Col>
       <Col :xs="22" :lg="{ span: 13 }">
         <br />
         <p class="f-black f-em semi-bold">¿Dónde quieres comprar?</p>
-        <Form
-          id="form-where"
-          ref="whereForm"
-          :model="whereForm"
-          :rules="whereFormValidate"
-          row
-        >
+        <Form id="form-where" ref="whereForm" :model="whereForm" :rules="whereFormValidate" row>
           <FormItem label="Departamento/Provincia" prop="city">
-            <Select
-              v-model="whereForm.city"
-              placeholder="Departamento/Provincia"
-            >
+            <Select v-model="whereForm.city" placeholder="Departamento/Provincia">
               <Option value="Lima">Lima</Option>
               <Option value="Arequipa">Arequipa</Option>
               <Option value="Trujillo">Trujillo</Option>
@@ -48,12 +40,7 @@
             </Select>
           </FormItem>
           <FormItem>
-            <Button
-              class="margin-27"
-              type="success"
-              @click="handleSubmit('whereForm')"
-              >SIGUIENTE</Button
-            >
+            <Button class="margin-27" type="success" @click="handleSubmit('whereForm')">SIGUIENTE</Button>
           </FormItem>
         </Form>
       </Col>
@@ -73,7 +60,7 @@
               <p>(511)6138888</p>
             </Col>
             <Col :xs="{ span: 6, offset: 17 }" :lg="{ span: 4, offset: 17 }">
-              <a href="" class="f-black">Ver Mapa</a>
+              <a href class="f-black">Ver Mapa</a>
               <br />
             </Col>
           </Row>
@@ -85,6 +72,17 @@
 <script>
 export default {
   name: "where",
+  head() {
+    return {
+      link: [
+        {
+          href:
+            "https://fonts.googleapis.com/css?family=Montserrat&display=swap",
+          rel: "stylesheet"
+        }
+      ]
+    };
+  },
   data() {
     return {
       whereForm: {
