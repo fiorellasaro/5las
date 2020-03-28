@@ -67,6 +67,17 @@
 <script>
 export default {
   name: "where",
+  head() {
+    return {
+      link: [
+        {
+          href:
+            "https://fonts.googleapis.com/css?family=Montserrat&display=swap",
+          rel: "stylesheet"
+        }
+      ]
+    };
+  },
   data() {
     const validatePassCheck = (rule, value, callback) => {
       if (value === "") {
@@ -157,7 +168,4 @@ export default {
 .width-candy {
   width: 50px;
 }
-
-
-
 </style>

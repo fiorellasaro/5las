@@ -11,22 +11,31 @@
       <br />
       <br />
       <Row type="flex" justify="center">
-        <Col :xs="22" :lg="6"
-          ><div class="qr lg-qr">
+        <Col :xs="22" :lg="6">
+          <div class="qr lg-qr">
             <img class="qr-image" src="../assets/icons/QR.png" />
           </div>
         </Col>
       </Row>
       <br />
-      <p class="f-center f-black medium l-spacing">
-        Muestra este código para ingresar a la tienda
-      </p>
+      <p class="f-center f-black medium l-spacing">Muestra este código para ingresar a la tienda</p>
     </div>
   </section>
 </template>
 <script>
 export default {
-  name: "QR"
+  name: "QR",
+  head() {
+    return {
+      link: [
+        {
+          href:
+            "https://fonts.googleapis.com/css?family=Montserrat&display=swap",
+          rel: "stylesheet"
+        }
+      ]
+    };
+  }
 };
 </script>
 <style>

@@ -38,7 +38,19 @@
   </section>
 </template>
 <script>
-export default {};
+export default {
+    head() {
+    return {
+      link: [
+        {
+          href:
+            "https://fonts.googleapis.com/css?family=Montserrat&display=swap",
+          rel: "stylesheet"
+        }
+      ]
+    };
+  }
+};
 </script>
 <style>
 @import "../assets/style.css";

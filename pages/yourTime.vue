@@ -13,12 +13,7 @@
           </div>
         </div>
       </Row>
-      <Row
-        type="flex"
-        justify="center"
-        align="bottom"
-        style="margin-top:40vh"
-      >
+      <Row type="flex" justify="center" align="bottom" style="margin-top:40vh">
         <Col>
           <Button type="success" class="heigth50">FINALIZAR VISITA</Button>
         </Col>
@@ -54,6 +49,17 @@ export default {
         this.resetTimer();
       }
     }
+  },
+  head() {
+    return {
+      link: [
+        {
+          href:
+            "https://fonts.googleapis.com/css?family=Montserrat&display=swap",
+          rel: "stylesheet"
+        }
+      ]
+    };
   },
   computed: {
     minutes: function() {
