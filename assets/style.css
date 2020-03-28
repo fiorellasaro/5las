@@ -101,6 +101,10 @@
 }
 .ivu-select-selection {
   background-color: #f4f9fc;
+  height: 48px !important;
+}
+.ivu-select-single .ivu-select-selection .ivu-select-placeholder, .ivu-select-single .ivu-select-selection .ivu-select-selected-value{
+  line-height: 46px !important;
 }
 .ivu-select-arrow {
   color: #dc050e;
@@ -117,7 +121,7 @@
 .ivu-select-item:hover,
 .ivu-select-item:focus,
 .ivu-select-item:active,
-.ivu-select-item-selected  {
+.ivu-select-item-selected {
   color: #dc050e;
   -webkit-box-shadow: none;
   box-shadow: none;

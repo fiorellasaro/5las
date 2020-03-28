@@ -98,6 +98,7 @@ export default {
         user: "",
         identityDoc: "",
         address: "",
+        district: "",
         email: "",
         password: "",
         confirmPassword: ""
@@ -146,6 +147,13 @@ export default {
             trigger: "blur"
           }
         ],
+        district: [
+          {
+            required: true,
+            message: "Por favor, seleccione su distrito",
+            trigger: "blur"
+          }
+        ],
         email: [
           {
             required: true,
@@ -185,7 +193,9 @@ export default {
   box-sizing: border-box;
   border-top-right-radius: 30px !important;
   border-bottom-right-radius: 30px;
-  /* border-left: 1px solid transparent; */
+  border-top-left-radius: 1px !important;
+  border-bottom-left-radius: 1px !important;
+  border-left: 1px solid transparent;
   padding: 2em 1em;
 }
 .margin-45 {
