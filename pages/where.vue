@@ -1,45 +1,57 @@
 <template>
-  <Row type="flex" justify="center" class="code-row-bg">
-    <Col :xs="22" :lg="24">
-      <Row>
-        <Col :xs="24" :lg="{ span: 1, offset: 1 }">
-          <nuxt-link to="/" class="f-black"
-            ><Icon type="md-arrow-back" class="margin-45" size="30"
-          /></nuxt-link>
+  <Row type="flex" justify="center">
+    <Col :xs="24" class="bg-red">
+      <Row type="flex" justify="center">
+        <Col>
+          <img src="../assets/icons/img.png" class="circle" />
         </Col>
-        <Col :xs="24" :lg="{ span: 10, offset: 5 }" class="lg-mt-30">
-          <h1 class="title">¿Dónde quieres comprar?</h1>
-          <Form
-            id="form-register"
-            ref="whereForm"
-            :model="whereForm"
-            :rules="whereFormValidate"
-            row
-          >
-            <FormItem label="Departamento/Provincia">
-              <Select v-model="whereForm.city">
-                <Option value="Lima">Lima</Option>
-                <Option value="Arequipa">Arequipa</Option>
-                <Option value="Trujillo">Trujillo</Option>
-              </Select>
-            </FormItem>
-            <FormItem label="Distrito">
-              <Select v-model="whereForm.district">
-                <Option value="Barranco">Barranco</Option>
-                <Option value="Lima">Lima</Option>
-                <Option value="Lince">Lince</Option>
-              </Select>
-            </FormItem>
-            <FormItem label="Lugar de compra">
-              <Select v-model="whereForm.place">
-                <Option value="Metro">Metro</Option>
-                <Option value="Wong">Wong</Option>
-                <Option value="Plaza Vea">Plaza Vea</Option>
-              </Select>
-            </FormItem>
-          </Form>
-        </Col>
+
+        <Col class="f-white  f-em m-auto">
+          <span class="semi-bold">Luis Delgado</span><br />
+          <span>Lima - Barranco</span></Col
+        >
       </Row>
+    </Col>
+    <Col :xs="22" :lg="{ span: 12 }">
+      <br />
+      <p class="f-black f-em semi-bold">¿Dónde quieres comprar?</p>
+      <Form
+        id="form-register"
+        ref="whereForm"
+        :model="whereForm"
+        :rules="whereFormValidate"
+        row
+      >
+        <FormItem label="Departamento/Provincia">
+          <Select v-model="whereForm.city" placeholder="Departamento/Provincia">
+            <Option value="Lima">Lima</Option>
+            <Option value="Arequipa">Arequipa</Option>
+            <Option value="Trujillo">Trujillo</Option>
+          </Select>
+        </FormItem>
+        <FormItem label="Distrito">
+          <Select v-model="whereForm.district" placeholder="Distrito">
+            <Option value="Barranco">Barranco</Option>
+            <Option value="Lima">Lima</Option>
+            <Option value="Lince">Lince</Option>
+          </Select>
+        </FormItem>
+        <FormItem label="Lugar de compra">
+          <Select v-model="whereForm.place" placeholder="Lugar de compra">
+            <Option value="Metro">Metro</Option>
+            <Option value="Wong">Wong</Option>
+            <Option value="Plaza Vea">Plaza Vea</Option>
+          </Select>
+        </FormItem>
+        <FormItem>
+          <Button
+            class="margin-27"
+            type="success"
+            @click="handleSubmit('formInline')"
+            >SIGUIENTE</Button
+          >
+        </FormItem>
+      </Form>
     </Col>
   </Row>
 </template>

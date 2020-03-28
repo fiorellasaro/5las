@@ -11,6 +11,12 @@
 .f-center {
   text-align: center;
 }
+.f-em {
+  font-size: 1.5em;
+}
+.m-auto {
+  margin: auto 4px;
+}
 .ivu-btn {
   color: #dc050e;
   background-color: #ffffff;
@@ -75,10 +81,17 @@
   font-size: 25px;
 }
 
-#formLogin .ivu-input {
+.ivu-input {
   border-radius: 30px !important;
   padding: 2em 1em;
+  background-color: #f4f9fc;
   /* border-color: #dc050e; */
+}
+.ivu-select-selection {
+  background-color: #f4f9fc;
+}
+.ivu-select-arrow {
+  color: #dc050e;
 }
 
 .ivu-input:hover,
@@ -115,4 +128,8 @@
 
 .ivu-select-selection {
   border-radius: 30px;
+}
+
+.circle {
+  border-radius: 50%;
 }
