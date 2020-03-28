@@ -1,132 +1,116 @@
 <template>
-  <Row type="flex" justify="center">
-    <Col :xs="24" class="bg-red">
-      <Row type="flex" justify="center">
-        <Col>
-          <img src="../assets/icons/img.png" class="circle" />
-        </Col>
+  <section>
+    <Row type="flex" justify="center">
+      <Col :xs="24" class="bg-red">
+        <Row type="flex" justify="center">
+          <Col>
+            <img src="../assets/icons/img.png" class="circle" />
+          </Col>
 
-        <Col class="f-white  f-em m-auto">
-          <span class="semi-bold">Luis Delgado</span><br />
-          <span>Lima - Barranco</span></Col
-        >
-      </Row>
-    </Col>
-    <Col :xs="22" :lg="{ span: 12 }">
-      <br />
-      <p class="f-black f-em semi-bold">¿Dónde quieres comprar?</p>
-      <Form
-        id="form-register"
-        ref="whereForm"
-        :model="whereForm"
-        :rules="whereFormValidate"
-        row
-      >
-        <FormItem label="Departamento/Provincia">
-          <Select v-model="whereForm.city" placeholder="Departamento/Provincia">
-            <Option value="Lima">Lima</Option>
-            <Option value="Arequipa">Arequipa</Option>
-            <Option value="Trujillo">Trujillo</Option>
-          </Select>
-        </FormItem>
-        <FormItem label="Distrito">
-          <Select v-model="whereForm.district" placeholder="Distrito">
-            <Option value="Barranco">Barranco</Option>
-            <Option value="Lima">Lima</Option>
-            <Option value="Lince">Lince</Option>
-          </Select>
-        </FormItem>
-        <FormItem label="Lugar de compra">
-          <Select v-model="whereForm.place" placeholder="Lugar de compra">
-            <Option value="Metro">Metro</Option>
-            <Option value="Wong">Wong</Option>
-            <Option value="Plaza Vea">Plaza Vea</Option>
-          </Select>
-        </FormItem>
-        <FormItem>
-          <Button
-            class="margin-27"
-            type="success"
-            @click="handleSubmit('formInline')"
-            >SIGUIENTE</Button
+          <Col class="f-white  f-em m-auto">
+            <span class="semi-bold">Luis Delgado</span><br />
+            <span>Lima - Barranco</span></Col
           >
-        </FormItem>
-      </Form>
-    </Col>
-  </Row>
+        </Row>
+      </Col>
+      <Col :xs="22" :lg="{ span: 13 }">
+        <br />
+        <p class="f-black f-em semi-bold">¿Dónde quieres comprar?</p>
+        <Form
+          id="form-where"
+          ref="whereForm"
+          :model="whereForm"
+          :rules="whereFormValidate"
+          row
+        >
+          <FormItem label="Departamento/Provincia" prop="city">
+            <Select
+              v-model="whereForm.city"
+              placeholder="Departamento/Provincia"
+            >
+              <Option value="Lima">Lima</Option>
+              <Option value="Arequipa">Arequipa</Option>
+              <Option value="Trujillo">Trujillo</Option>
+            </Select>
+          </FormItem>
+          <FormItem label="Distrito" prop="district">
+            <Select v-model="whereForm.district" placeholder="Distrito">
+              <Option value="Barranco">Barranco</Option>
+              <Option value="Lima">Lima</Option>
+              <Option value="Lince">Lince</Option>
+            </Select>
+          </FormItem>
+          <FormItem label="Lugar de compra" prop="place">
+            <Select v-model="whereForm.place" placeholder="Lugar de compra">
+              <Option value="Metro">Metro</Option>
+              <Option value="Wong">Wong</Option>
+              <Option value="Plaza Vea">Plaza Vea</Option>
+            </Select>
+          </FormItem>
+          <FormItem>
+            <Button
+              class="margin-27"
+              type="success"
+              @click="handleSubmit('whereForm')"
+              >SIGUIENTE</Button
+            >
+          </FormItem>
+        </Form>
+      </Col>
+      <Col :xs="22" :lg="{ span: 13 }">
+        <Card>
+          <Row type="flex" justify="space-between" align="middle">
+            <Col :xs="{ span: 8, offset: 16 }" :lg="{ span: 5, offset: 19 }">
+              <p class="open semi-bold">Abierto</p>
+            </Col>
+          </Row>
+          <Row type="flex" justify="space-around" align="middle">
+            <Col :xs="{ span: 6 }" :lg="{ span: 4 }">
+              <img src="../assets/icons/logo-metro.png" />
+            </Col>
+            <Col :xs="{ span: 6 }" :lg="{ span: 4 }">
+              <p>Av. Grau 513</p>
+              <p>(511)6138888</p>
+            </Col>
+            <Col :xs="{ span: 6, offset: 17 }" :lg="{ span: 4, offset: 17 }">
+              <a href="" class="f-black">Ver Mapa</a>
+              <br />
+            </Col>
+          </Row>
+        </Card>
+      </Col>
+    </Row>
+  </section>
 </template>
 <script>
 export default {
   name: "where",
   data() {
-    const validatePassCheck = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("Por favor, confirme su contraseña"));
-      } else if (value !== this.formInline.password) {
-        callback(new Error("No coincide con la contraseña ingresada"));
-      } else {
-        callback();
-      }
-    };
     return {
       whereForm: {
         city: "",
         district: "",
         place: ""
       },
-      ruleInline: {
-        user: [
+      whereFormValidate: {
+        city: [
           {
             required: true,
-            message: "Por favor, escriba su nombre completo",
+            message: "Por favor, seleccione su ciudad",
             trigger: "blur"
           }
         ],
-        password: [
+        district: [
           {
             required: true,
-            message: "Por favor, ingrese una contraseña",
-            trigger: "blur"
-          },
-          {
-            type: "string",
-            min: 6,
-            message:
-              "Por favor, escriba una contraseña con más de 6 caracteres",
+            message: "Por favor, seleccione su distrito",
             trigger: "blur"
           }
         ],
-        confirmPassword: [{ validator: validatePassCheck, trigger: "blur" }],
-        identityDoc: [
+        place: [
           {
             required: true,
-            message: "Por favor, ingrese el Nº de su documento",
-            trigger: "blur"
-          },
-          {
-            type: "string",
-            min: 8,
-            max: 11,
-            message: "Su Nº de documento debe ser de 8 a 11 caracteres",
-            trigger: "blur"
-          }
-        ],
-        address: [
-          {
-            required: true,
-            message: "Por favor, escriba su dirección",
-            trigger: "blur"
-          }
-        ],
-        email: [
-          {
-            required: true,
-            message: "Por favor, escriba su correo electrónico",
-            trigger: "blur"
-          },
-          {
-            type: "email",
-            message: "Por favor, ingrese un correo válido",
+            message: "Por favor, seleccione un lugar de compra",
             trigger: "blur"
           }
         ]
@@ -150,4 +134,20 @@ export default {
 
 <style>
 @import "../assets/style.css";
+.ivu-card-body {
+  padding: 0;
+  padding-bottom: 10px;
+}
+.ivu-card {
+  border-radius: 30px;
+  background-color: #f4f9fc;
+}
+.open {
+  background-color: #42b01c;
+  border-radius: 0px 20px 0px 20px;
+  width: 100%;
+  text-align: center;
+  color: #ffffff;
+  padding: 0.3em;
+}
 </style>

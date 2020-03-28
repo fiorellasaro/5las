@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Montserrat:400,500,600,900&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700,800,900&display=swap");
 * {
   font-family: "Montserrat";
 }
@@ -41,19 +41,31 @@
   background-color: #dc050e;
   border-color: #ffffff;
 }
-.ivu-btn-success:hover {
+.ivu-btn-success:hover,
+.ivu-btn-success:focus,
+.ivu-btn-success:active {
   color: #dc050e;
   background-color: #ffffff;
   border-color: #dc050e;
+  box-shadow: none;
+}
+.extra-bold {
+  font-weight: 700;
 }
 .bold {
-  font-weight: 900;
+  font-weight: 700;
+}
+.medium {
+  font-weight: 500;
 }
 .semi-bold {
   font-weight: 600;
 }
 .bg-red {
   background-color: #dc050e;
+}
+.l-spacing {
+  letter-spacing: 0.5px;
 }
 .full {
   min-height: 100vh;
