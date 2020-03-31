@@ -76,6 +76,7 @@
   </section>
 </template>
 <script>
+import * as Api from "../../server/index";
 export default {
   name: "login",
   data() {
@@ -117,7 +118,13 @@ export default {
     start(name) {
       this.$refs[name].validate(valid => {
         if (valid) {
-          this.$Message.success("Bienvenido a 5las!");
+          Api.login
+            .then(res => {
+              this.$Message.success("Bienvenido a 5las!");
+            })
+            .catch(err => {
+              this.$Message.error({ title: err });
+            });
         } else {
           this.$Notice.error({ title: "Revise los datos ingresados" });
         }
@@ -128,6 +135,4 @@ export default {
 </script>
 <style>
 @import "../assets/style.css";
-
-
 </style>

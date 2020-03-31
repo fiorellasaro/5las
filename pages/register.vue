@@ -16,21 +16,17 @@
             :rules="ruleInline"
             row
           >
-            <FormItem prop="user">
+            <FormItem prop="fullname">
               <Input
                 type="text"
-                v-model="formInline.user"
+                v-model="formInline.fullname"
                 placeholder="Nombre y apellidos"
               >
                 <Icon size="20" type="ios-person-outline" slot="prepend"></Icon>
               </Input>
             </FormItem>
-            <FormItem prop="identityDoc">
-              <Input
-                type="text"
-                v-model="formInline.identityDoc"
-                placeholder="DNI/CE"
-              >
+            <FormItem prop="dni">
+              <Input type="text" v-model="formInline.dni" placeholder="DNI/CE">
                 <Icon size="20" type="ios-card-outline" slot="prepend" />
               </Input>
             </FormItem>
@@ -42,6 +38,13 @@
               >
                 <Icon size="20" type="ios-pin-outline" slot="prepend" />
               </Input>
+            </FormItem>
+            <FormItem label="Distrito" prop="district_id">
+              <Select v-model="formInline.district" placeholder="Distrito">
+                <Option value="Barranco">Barranco</Option>
+                <Option value="Lima">Lima</Option>
+                <Option value="Lince">Lince</Option>
+              </Select>
             </FormItem>
             <FormItem prop="email">
               <Input v-model="formInline.email" placeholder="Correo">
@@ -81,6 +84,7 @@
   </Row>
 </template>
 <script>
+import * as Api from "../../server/index";
 export default {
   name: "register",
   data() {
@@ -95,16 +99,16 @@ export default {
     };
     return {
       formInline: {
-        user: "",
-        identityDoc: "",
+        fullname: "",
+        dni: "",
         address: "",
-        district: "",
+        district_id: "",
         email: "",
         password: "",
         confirmPassword: ""
       },
       ruleInline: {
-        user: [
+        fullname: [
           {
             required: true,
             message: "Por favor, escriba su nombre completo",
@@ -126,7 +130,7 @@ export default {
           }
         ],
         confirmPassword: [{ validator: validatePassCheck, trigger: "blur" }],
-        identityDoc: [
+        dni: [
           {
             required: true,
             message: "Por favor, ingrese el Nº de su documento",
@@ -147,7 +151,7 @@ export default {
             trigger: "blur"
           }
         ],
-        district: [
+        district_id: [
           {
             required: true,
             message: "Por favor, seleccione su distrito",
@@ -173,8 +177,12 @@ export default {
     handleSubmit(name) {
       this.$refs[name].validate(valid => {
         if (valid) {
-          this.$Message.success("Bienvenido a 5las!");
-          this.$router.push({ path: "where" });
+          Api.signup
+            .then(res => {
+              this.$Message.success("Bienvenido a 5las!");
+              this.$router.push({ path: "where" });
+            })
+            .catch(err => {});
         } else {
           this.$Notice.error({ title: "Revise los datos ingresados" });
         }
