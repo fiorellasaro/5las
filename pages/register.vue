@@ -21,34 +21,63 @@
                 type="text"
                 v-model="formInline.fullname"
                 placeholder="Nombre y apellidos"
+                prefix="ios-person-outline"
               >
-                <Icon size="20" type="ios-person-outline" slot="prepend"></Icon>
+                <!-- <Icon size="20" type="ios-person-outline" slot="prepend"></Icon> -->
               </Input>
             </FormItem>
             <FormItem prop="dni">
-              <Input type="text" v-model="formInline.dni" placeholder="DNI/CE">
-                <Icon size="20" type="ios-card-outline" slot="prepend" />
+              <Input
+                type="text"
+                prefix="ios-card-outline"
+                v-model="formInline.dni"
+                placeholder="DNI/CE"
+              >
+                <!-- <Icon size="20" type="ios-card-outline" slot="prepend" /> -->
               </Input>
             </FormItem>
             <FormItem prop="address">
               <Input
                 type="text"
+                prefix="ios-pin-outline"
                 v-model="formInline.address"
                 placeholder="Dirección"
               >
-                <Icon size="20" type="ios-pin-outline" slot="prepend" />
+                <!-- <Icon size="20" type="ios-pin-outline" slot="prepend" /> -->
               </Input>
             </FormItem>
-            <FormItem label="Distrito" prop="district_id">
-              <Select v-model="formInline.district" placeholder="Distrito">
-                <Option value="Barranco">Barranco</Option>
-                <Option value="Lima">Lima</Option>
-                <Option value="Lince">Lince</Option>
+            <FormItem prop="district_id">
+              <Select
+                prefix="ios-home-outline"
+                v-model="formInline.district"
+                @on-change="setDistrict"
+                placeholder="Distrito"
+              >
+                <Option
+                  v-for="district in districts"
+                  :key="district.id"
+                  :value="district.id"
+                  >{{ district.name }}</Option
+                >
+              </Select>
+            </FormItem>
+            <FormItem prop="gender">
+              <Select
+                v-model="formInline.gender"
+                placeholder="Me identifico como"
+                prefix="ios-person-outline"
+              >
+                <Option value="F">Mujer</Option>
+                <Option value="M">Hombre</Option>
               </Select>
             </FormItem>
             <FormItem prop="email">
-              <Input v-model="formInline.email" placeholder="Correo">
-                <Icon size="20" type="ios-mail-outline" slot="prepend" />
+              <Input
+                prefix="ios-mail-outline"
+                v-model="formInline.email"
+                placeholder="Correo"
+              >
+                <!-- <Icon size="20" type="ios-mail-outline" slot="prepend" /> -->
               </Input>
             </FormItem>
             <FormItem prop="password">
@@ -56,8 +85,9 @@
                 type="password"
                 v-model="formInline.password"
                 placeholder="Contraseña"
+                prefix="ios-lock-outline"
               >
-                <Icon size="20" type="ios-lock-outline" slot="prepend"></Icon>
+                <!-- <Icon size="20" type="ios-lock-outline" slot="prepend"></Icon> -->
               </Input>
             </FormItem>
             <FormItem prop="confirmPassword">
@@ -65,8 +95,9 @@
                 type="password"
                 v-model="formInline.confirmPassword"
                 placeholder="Confirmar contraseña"
+                prefix="ios-lock-outline"
               >
-                <Icon size="20" type="ios-lock-outline" slot="prepend"></Icon>
+                <!-- <Icon size="20" type="ios-lock-outline" slot="prepend"></Icon> -->
               </Input>
             </FormItem>
             <FormItem>
@@ -84,7 +115,7 @@
   </Row>
 </template>
 <script>
-import * as Api from "../../server/index";
+import { signup, getDistricts } from "../server/index";
 export default {
   name: "register",
   data() {
@@ -98,14 +129,27 @@ export default {
       }
     };
     return {
+      districts: [],
+      // formInline: {
+      //   fullname: "",
+      //   dni: "",
+      //   address: "",
+      //   district_id: Number,
+      //   gender: "",
+      //   email: "",
+      //   password: "",
+      //   confirmPassword: ""
+      // },
       formInline: {
-        fullname: "",
-        dni: "",
-        address: "",
-        district_id: "",
-        email: "",
-        password: "",
-        confirmPassword: ""
+        fullname: "Andrea",
+        dni: "76282636",
+        address: "Calle 123",
+        district: "",
+        district_id: Number,
+        gender: "F",
+        email: "andreale17@icloud.com",
+        password: "Andrea123",
+        confirmPassword: "Andrea123"
       },
       ruleInline: {
         fullname: [
@@ -151,10 +195,17 @@ export default {
             trigger: "blur"
           }
         ],
-        district_id: [
+        district: [
           {
             required: true,
             message: "Por favor, seleccione su distrito",
+            trigger: "blur"
+          }
+        ],
+        gender: [
+          {
+            required: true,
+            message: "Por favor, seleccione cómo se identifica",
             trigger: "blur"
           }
         ],
@@ -177,17 +228,44 @@ export default {
     handleSubmit(name) {
       this.$refs[name].validate(valid => {
         if (valid) {
-          Api.signup
+          delete this.formInline.district;
+          signup(this.formInline)
             .then(res => {
-              this.$Message.success("Bienvenido a 5las!");
-              this.$router.push({ path: "where" });
+              console.log(res);
+              if (res.status == 201) {
+                this.$Message.success("Bienvenido a 5las!");
+                this.$router.push({ path: "where" });
+              } else if (res.message == "Request failed with status code 409") {
+                this.$Notice.error({
+                  title: "Revise sus datos",
+                  desc:
+                    "Por favor, revise si ya tiene ya una cuenta registrada asociada a su identidad"
+                });
+              }
             })
-            .catch(err => {});
+            .catch(err => {
+              console.log(err);
+              this.$Notice.error({
+                title: "Revise si tiene ya una cuenta registrada"
+              });
+            });
         } else {
           this.$Notice.error({ title: "Revise los datos ingresados" });
         }
       });
+    },
+    getDistricts() {
+      getDistricts().then(res => {
+        this.districts = res.data;
+      });
+    },
+    setDistrict(val) {
+      this.formInline.district_id = parseInt(val);
+      // console.log("xxxxxxx");
     }
+  },
+  mounted() {
+    this.getDistricts();
   }
 };
 </script>
@@ -197,14 +275,15 @@ export default {
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,500,600,900&display=swap");
 
 #form-register .ivu-input {
-  color: #fff !important;
+  /* color: #fff !important; */
   box-sizing: border-box;
-  border-top-right-radius: 30px !important;
+  border-radius: 30px;
+  /* border-top-right-radius: 30px !important;
   border-bottom-right-radius: 30px;
   border-top-left-radius: 1px !important;
-  border-bottom-left-radius: 1px !important;
-  border-left: 1px solid transparent;
-  padding: 2em 1em;
+  border-bottom-left-radius: 1px !important; */
+  /* border-left: 1px solid transparent; */
+  /* padding: 2em 1em; */
 }
 .margin-45 {
   margin-top: 10px;
@@ -227,20 +306,6 @@ export default {
   letter-spacing: 0.5px;
   color: #000000;
   margin-bottom: 45px;
-}
-#form-register .ivu-input-group-prepend {
-  /* border: 1px solid #00dfc4; */
-  border-right: none;
-  background-color: transparent !important;
-  box-sizing: border-box;
-  border-radius: 30px;
-  border-left: none;
-  color: black;
-  /* padding: 0 2px !important; */
-}
-
-#form-register .ivu-input-group-prepend .ivu-icon {
-  padding-left: 5px !important;
 }
 
 .f-black:hover {

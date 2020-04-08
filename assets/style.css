@@ -103,7 +103,8 @@
   background-color: #f4f9fc;
   height: 48px !important;
 }
-.ivu-select-single .ivu-select-selection .ivu-select-placeholder, .ivu-select-single .ivu-select-selection .ivu-select-selected-value{
+.ivu-select-single .ivu-select-selection .ivu-select-placeholder,
+.ivu-select-single .ivu-select-selection .ivu-select-selected-value {
   line-height: 46px !important;
 }
 .ivu-select-arrow {
@@ -157,4 +158,5 @@
 
 .circle {
   border-radius: 50%;
+  height: 70px;
 }

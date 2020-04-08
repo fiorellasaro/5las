@@ -2,18 +2,21 @@
   <section class="body">
     <div class="background"></div>
     <div class="content f-white">
-      <p class="bold font-25">Luis Delgado</p>
+      <p class="bold font-25">{{ this.name }}</p>
       <p class="medium">DNI: 41887436</p>
       <br />
       <br />
-      <p class="medium">Tienda: Metro Barranco</p>
-      <p class="medium">Horario de visita: 15:00 - 16:00 hrs</p>
+      <p class="medium">
+        Tienda: {{ this.companyName }} {{ this.companyAddress }}
+      </p>
+      <p class="medium">Horario de visita: {{ this.hour }}</p>
       <br />
       <br />
       <Row type="flex" justify="center">
         <Col :xs="22" :lg="6"
           ><div class="qr lg-qr">
-            <img class="qr-image" src="../assets/icons/QR.png" />
+            <!-- <img class="qr-image" src="../assets/icons/QR.png" /> -->
+            <img :src="image" />
           </div>
         </Col>
       </Row>
@@ -25,8 +28,30 @@
   </section>
 </template>
 <script>
+import localStorage from "localStorage";
+import QrcodeVue from "qrcode.vue";
 export default {
-  name: "QR"
+  name: "QR",
+  components: {
+    QrcodeVue
+  },
+  data() {
+    return {
+      name: "",
+      hour: "",
+      companyName: "",
+      companyAddress: "",
+      value: "fdcaed0b559f49c8a988",
+      size: "2",
+      image
+    };
+  },
+  created() {
+    this.name = localStorage.getItem("name");
+    this.hour = localStorage.getItem("hour");
+    this.companyName = localStorage.getItem("companyName");
+    this.companyAddress = localStorage.getItem("companyAddress");
+  }
 };
 </script>
 <style>

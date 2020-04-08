@@ -29,6 +29,7 @@ let api = axios.create({
 });
 
 export const signup = async (userInfo) => {
+  console.log(userInfo)
   try {
     const res = await api.post(`http://5las.renatocenteno.com/auth/signup`, userInfo)
     Object.assign(api.defaults, { headers: { Authorization: res.data.id } })
@@ -41,7 +42,46 @@ export const signup = async (userInfo) => {
 export const signin = async (userCredentials) => {
   try {
     const res = await api.post(`http://5las.renatocenteno.com/auth/signin`, userCredentials)
-    Object.assign(api.defaults, { headers: { Authorization: res.data.id } })
+
+    return res
+  } catch (error) {
+    return error
+  }
+}
+
+export const getDistricts = async () => {
+  try {
+    const res = await api.get(`http://5las.renatocenteno.com/companies/districts/1501`)
+
+    return res
+  } catch (error) {
+    return error
+  }
+}
+
+export const getCompany = async (district, token) => {
+  try {
+    Object.assign(api.defaults, { headers: { Authorization: `Bearer ${token}` } })
+    const res = await api.get(`http://5las.renatocenteno.com/companies/byDistrict/${district}`)
+    return res
+  } catch (error) {
+    return error
+  }
+}
+
+export const schedule = async (turn, token) => {
+  try {
+    Object.assign(api.defaults, { headers: { Authorization: `Bearer ${token}` } })
+    const res = await api.get(`http://5las.renatocenteno.com/companies/branch/${turn}/schedule`)
+    return res
+  } catch (error) {
+    return error
+  }
+}
+
+export const generateTicket = async (turn, token) => {
+  try {
+    const res = await api.post(`http://5las.renatocenteno.com/companies/branch/${turn}/schedule`)
     return res
   } catch (error) {
     return error

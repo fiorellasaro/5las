@@ -18,6 +18,7 @@
                 <Col :xs="24" :lg="24">
                   <FormItem prop="email">
                     <Input
+                      prefix="ios-contact"
                       v-model="loginForm.email"
                       placeholder="Ingresa tu e-mail"
                     ></Input>
@@ -26,6 +27,7 @@
                 <Col :xs="24" :lg="24">
                   <FormItem prop="password">
                     <Input
+                      type="password"
                       v-model="loginForm.password"
                       placeholder="Ingresa tu clave"
                     ></Input>
@@ -76,14 +78,15 @@
   </section>
 </template>
 <script>
-import * as Api from "../../server/index";
+import * as Api from "../server/index";
+import localStorage from "localStorage";
 export default {
   name: "login",
   data() {
     return {
       loginForm: {
-        email: "",
-        password: ""
+        email: "andreale17@icloud.com",
+        password: "Andrea123"
       },
       loginFormValidate: {
         email: [
@@ -118,9 +121,24 @@ export default {
     start(name) {
       this.$refs[name].validate(valid => {
         if (valid) {
-          Api.login
+          Api.signin(this.loginForm)
             .then(res => {
-              this.$Message.success("Bienvenido a 5las!");
+              console.log(res.statusCode);
+              if (res.status == 201) {
+                this.$Message.success("Bienvenido a 5las!");
+                this.$router.push({ path: "where" });
+                console.log(res);
+                localStorage.setItem(
+                  "token",
+                  JSON.stringify(res.data.accessToken)
+                );
+              } else if (res.statusCode == 401) {
+                this.$Message.error(
+                  "Verifica si estás registrado o si tu clave es correcta"
+                );
+              } else {
+                this.$Message.error("Verifica los datos o regístrate");
+              }
             })
             .catch(err => {
               this.$Message.error({ title: err });
