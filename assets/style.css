@@ -95,7 +95,7 @@
 
 .ivu-input {
   border-radius: 30px !important;
-  padding: 2em 1em;
+  padding: 2em 3.5em;
   background-color: #f4f9fc;
   /* border-color: #dc050e; */
 }
@@ -103,10 +103,10 @@
   background-color: #f4f9fc;
   height: 48px !important;
 }
-.ivu-select-single .ivu-select-selection .ivu-select-placeholder,
+/* .ivu-select-single .ivu-select-selection .ivu-select-placeholder,
 .ivu-select-single .ivu-select-selection .ivu-select-selected-value {
   line-height: 46px !important;
-}
+} */
 .ivu-select-arrow {
   color: #dc050e;
 }
@@ -159,4 +159,22 @@
 .circle {
   border-radius: 50%;
   height: 70px;
+}
+
+.ivu-input-prefix,
+.ivu-input-suffix {
+  padding: 10px;
+}
+
+.ivu-input-prefix i,
+.ivu-input-suffix i {
+  font-size: 32px;
+}
+
+.ivu-select-single .ivu-select-prefix {
+  padding: 10px;
+  padding-right: 0px;
+}
+.ivu-select-prefix i {
+  font-size: 32px;
 }

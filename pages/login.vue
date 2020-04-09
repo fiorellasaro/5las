@@ -18,7 +18,7 @@
                 <Col :xs="24" :lg="24">
                   <FormItem prop="email">
                     <Input
-                      prefix="ios-contact"
+                      prefix="ios-contact-outline"
                       v-model="loginForm.email"
                       placeholder="Ingresa tu e-mail"
                     ></Input>
@@ -27,16 +27,18 @@
                 <Col :xs="24" :lg="24">
                   <FormItem prop="password">
                     <Input
+                      prefix="ios-unlock-outline"
+                      sufix="ios-eye-outline"
                       type="password"
                       v-model="loginForm.password"
                       placeholder="Ingresa tu clave"
                     ></Input>
                   </FormItem>
-                  <Row type="flex" justify="end">
+                  <!-- <Row type="flex" justify="end">
                     <Col class="mt-less">
                       <a href="" class="f-black">¿Olvidaste tu contraseña?</a>
                     </Col>
-                  </Row>
+                  </Row> -->
                 </Col>
                 <br />
                 <Col :xs="24" :lg="8">
@@ -44,9 +46,9 @@
                     >INGRESAR</Button
                   >
                 </Col>
-                <Col :xs="24" :lg="24">
+                <!-- <Col :xs="24" :lg="24">
                   <Divider>o continúa con</Divider>
-                </Col>
+                </Col> 
                 <Row type="flex" justify="space-between">
                   <Col :lg="12">
                     <img src="../assets/icons/fb-btn.png" />
@@ -54,7 +56,7 @@
                   <Col :lg="12">
                     <img src="../assets/icons/google-btn.png"
                   /></Col>
-                </Row>
+                </Row>-->
               </Row>
               <br />
               <br />
@@ -109,8 +111,8 @@ export default {
           },
           {
             type: "string",
-            min: 6,
-            message: "Su clave no debe ser menor a 6 dígitos",
+            min: 8,
+            message: "Su clave no debe ser menor a 8 dígitos",
             trigger: "blur"
           }
         ]

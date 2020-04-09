@@ -3,7 +3,7 @@
     <Row type="flex" justify="center">
       <Col :xs="24" class="bg-red">
         <Row type="flex" justify="center">
-          <Col>
+          <Col :lg="{ span: 3, offset: 6 }">
             <img src="../assets/icons/icon.jpeg" class="circle" />
           </Col>
 
@@ -12,6 +12,11 @@
             ><br />
             <span>Lima - {{ this.district.name }}</span></Col
           >
+          <Col :lg="{ span: 1, offset: 6 }">
+            <p @click="exit">
+              <a class="f-white bold"><br />SALIR</a>
+            </p>
+          </Col>
         </Row>
       </Col>
       <Col :xs="22" :lg="{ span: 13 }">
@@ -187,6 +192,10 @@ export default {
       }
       this.show = true;
       this.whereForm.place = val;
+    },
+    exit() {
+      localStorage.clear();
+      this.$router.push({ path: "hours" });
     }
   },
   created() {
@@ -241,5 +250,13 @@ export default {
   text-align: center;
   color: #ffffff;
   padding: 0.3em;
+}
+
+#form-where .ivu-select-single .ivu-select-selection .ivu-select-placeholder,
+#form-where
+  .ivu-select-single
+  .ivu-select-selection
+  .ivu-select-selected-value {
+  line-height: 45px;
 }
 </style>

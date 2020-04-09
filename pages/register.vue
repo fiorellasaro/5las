@@ -105,6 +105,7 @@
                 class="margin-27"
                 type="success"
                 @click="handleSubmit('formInline')"
+                :disable="disable"
                 >CREAR CUENTA</Button
               >
             </FormItem>
@@ -115,7 +116,7 @@
   </Row>
 </template>
 <script>
-import { signup, getDistricts } from "../server/index";
+import { signup, signin, getDistricts } from "../server/index";
 export default {
   name: "register",
   data() {
@@ -138,7 +139,8 @@ export default {
         gender: "",
         email: "",
         password: "",
-        confirmPassword: ""
+        confirmPassword: "",
+        disable: false
       },
       // formInline: {
       //   fullname: "Andrea",
@@ -167,9 +169,9 @@ export default {
           },
           {
             type: "string",
-            min: 6,
+            min: 8,
             message:
-              "Por favor, escriba una contraseña con más de 6 caracteres",
+              "Por favor, escriba una contraseña con más de 8 caracteres",
             trigger: "blur"
           }
         ],
@@ -228,19 +230,45 @@ export default {
     handleSubmit(name) {
       this.$refs[name].validate(valid => {
         if (valid) {
+          this.disable = true;
           delete this.formInline.district;
           signup(this.formInline)
             .then(res => {
               console.log(res);
-              if (res.status == 201) {
-                this.$Message.success("Bienvenido a 5las!");
-                this.$router.push({ path: "where" });
-              } else if (res.message == "Request failed with status code 409") {
+              if (res.message == "Request failed with status code 409") {
+                this.disable = false;
                 this.$Notice.error({
                   title: "Revise sus datos",
                   desc:
                     "Por favor, revise si ya tiene ya una cuenta registrada asociada a su identidad"
                 });
+              } else {
+                let loginForm = {
+                  email: this.formInline.email,
+                  password: this.formInline.password
+                };
+                signin(loginForm)
+                  .then(res => {
+                    console.log(res.statusCode);
+                    if (res.status == 201) {
+                      this.$Message.success("Bienvenido a 5las!");
+                      this.$router.push({ path: "where" });
+                      console.log(res);
+                      localStorage.setItem(
+                        "token",
+                        JSON.stringify(res.data.accessToken)
+                      );
+                    } else if (res.statusCode == 401) {
+                      this.$Message.error(
+                        "Verifica si estás registrado o si tu clave es correcta"
+                      );
+                    } else {
+                      this.$Message.error("Verifica los datos o regístrate");
+                    }
+                  })
+                  .catch(err => {
+                    this.$Message.error({ title: err });
+                  });
               }
             })
             .catch(err => {
