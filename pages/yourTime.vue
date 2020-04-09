@@ -15,7 +15,9 @@
       </Row>
       <Row type="flex" justify="center" align="bottom" style="margin-top:40vh">
         <Col>
-          <Button type="success" class="heigth50">FINALIZAR VISITA</Button>
+          <Button type="success" class="heigth50" @click="toEnd"
+            >FINALIZAR VISITA</Button
+          >
         </Col>
       </Row>
     </div>
@@ -48,7 +50,11 @@ export default {
         this.totalTime = 0;
         this.resetTimer();
       }
-    }
+    },
+    toEnd() {
+      this.$router.push({ path: "end" });
+    },
+ 
   },
   head() {
     return {

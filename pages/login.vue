@@ -18,6 +18,7 @@
                 <Col :xs="24" :lg="24">
                   <FormItem prop="email">
                     <Input
+                      prefix="ios-contact-outline"
                       v-model="loginForm.email"
                       placeholder="Ingresa tu e-mail"
                     ></Input>
@@ -26,15 +27,18 @@
                 <Col :xs="24" :lg="24">
                   <FormItem prop="password">
                     <Input
+                      prefix="ios-unlock-outline"
+                      sufix="ios-eye-outline"
+                      type="password"
                       v-model="loginForm.password"
                       placeholder="Ingresa tu clave"
                     ></Input>
                   </FormItem>
-                  <Row type="flex" justify="end">
+                  <!-- <Row type="flex" justify="end">
                     <Col class="mt-less">
                       <a href="" class="f-black">¿Olvidaste tu contraseña?</a>
                     </Col>
-                  </Row>
+                  </Row> -->
                 </Col>
                 <br />
                 <Col :xs="24" :lg="8">
@@ -42,9 +46,9 @@
                     >INGRESAR</Button
                   >
                 </Col>
-                <Col :xs="24" :lg="24">
+                <!-- <Col :xs="24" :lg="24">
                   <Divider>o continúa con</Divider>
-                </Col>
+                </Col> 
                 <Row type="flex" justify="space-between">
                   <Col :lg="12">
                     <img src="../assets/icons/fb-btn.png" />
@@ -52,7 +56,7 @@
                   <Col :lg="12">
                     <img src="../assets/icons/google-btn.png"
                   /></Col>
-                </Row>
+                </Row>-->
               </Row>
               <br />
               <br />
@@ -76,6 +80,8 @@
   </section>
 </template>
 <script>
+import * as Api from "../server/index";
+import localStorage from "localStorage";
 export default {
   name: "login",
   data() {
@@ -105,8 +111,8 @@ export default {
           },
           {
             type: "string",
-            min: 6,
-            message: "Su clave no debe ser menor a 6 dígitos",
+            min: 8,
+            message: "Su clave no debe ser menor a 8 dígitos",
             trigger: "blur"
           }
         ]
@@ -117,7 +123,28 @@ export default {
     start(name) {
       this.$refs[name].validate(valid => {
         if (valid) {
-          this.$Message.success("Bienvenido a 5las!");
+          Api.signin(this.loginForm)
+            .then(res => {
+              console.log(res.statusCode);
+              if (res.status == 201) {
+                this.$Message.success("Bienvenido a 5las!");
+                this.$router.push({ path: "where" });
+                console.log(res);
+                localStorage.setItem(
+                  "token",
+                  JSON.stringify(res.data.accessToken)
+                );
+              } else if (res.statusCode == 401) {
+                this.$Message.error(
+                  "Verifica si estás registrado o si tu clave es correcta"
+                );
+              } else {
+                this.$Message.error("Verifica los datos o regístrate");
+              }
+            })
+            .catch(err => {
+              this.$Message.error({ title: err });
+            });
         } else {
           this.$Notice.error({ title: "Revise los datos ingresados" });
         }
@@ -128,6 +155,4 @@ export default {
 </script>
 <style>
 @import "../assets/style.css";
-
-
 </style>

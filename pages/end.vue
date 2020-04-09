@@ -7,7 +7,7 @@
     <p class="bold f-white font-25">¡GRACIAS!</p>
     <p class="bold f-white font-25">por usar</p>
     <br />
-    <div class="login-logo">
+    <div class="login-logo" @click="toWhere">
       <bounce-loader class="static" :color="color" :size="size"></bounce-loader>
       <img class="z-index-3" src="../assets/icons/logo-red.png" />
     </div>
@@ -70,6 +70,11 @@ export default {
   },
   components: {
     BounceLoader
+  },
+  methods: {
+    toWhere() {
+      this.$router.push({ path: "where" });
+    }
   }
 };
 </script>

@@ -16,36 +16,68 @@
             :rules="ruleInline"
             row
           >
-            <FormItem prop="user">
+            <FormItem prop="fullname">
               <Input
                 type="text"
-                v-model="formInline.user"
+                v-model="formInline.fullname"
                 placeholder="Nombre y apellidos"
+                prefix="ios-person-outline"
               >
-                <Icon size="20" type="ios-person-outline" slot="prepend"></Icon>
+                <!-- <Icon size="20" type="ios-person-outline" slot="prepend"></Icon> -->
               </Input>
             </FormItem>
-            <FormItem prop="identityDoc">
+            <FormItem prop="dni">
               <Input
                 type="text"
-                v-model="formInline.identityDoc"
+                prefix="ios-card-outline"
+                v-model="formInline.dni"
                 placeholder="DNI/CE"
               >
-                <Icon size="20" type="ios-card-outline" slot="prepend" />
+                <!-- <Icon size="20" type="ios-card-outline" slot="prepend" /> -->
               </Input>
             </FormItem>
             <FormItem prop="address">
               <Input
                 type="text"
+                prefix="ios-pin-outline"
                 v-model="formInline.address"
                 placeholder="Dirección"
               >
-                <Icon size="20" type="ios-pin-outline" slot="prepend" />
+                <!-- <Icon size="20" type="ios-pin-outline" slot="prepend" /> -->
               </Input>
             </FormItem>
+            <FormItem prop="district_id">
+              <Select
+                prefix="ios-home-outline"
+                v-model="formInline.district"
+                @on-change="setDistrict"
+                placeholder="Distrito"
+              >
+                <Option
+                  v-for="district in districts"
+                  :key="district.id"
+                  :value="district.id"
+                  >{{ district.name }}</Option
+                >
+              </Select>
+            </FormItem>
+            <FormItem prop="gender">
+              <Select
+                v-model="formInline.gender"
+                placeholder="Me identifico como"
+                prefix="ios-person-outline"
+              >
+                <Option value="F">Mujer</Option>
+                <Option value="M">Hombre</Option>
+              </Select>
+            </FormItem>
             <FormItem prop="email">
-              <Input v-model="formInline.email" placeholder="Correo">
-                <Icon size="20" type="ios-mail-outline" slot="prepend" />
+              <Input
+                prefix="ios-mail-outline"
+                v-model="formInline.email"
+                placeholder="Correo"
+              >
+                <!-- <Icon size="20" type="ios-mail-outline" slot="prepend" /> -->
               </Input>
             </FormItem>
             <FormItem prop="password">
@@ -53,8 +85,9 @@
                 type="password"
                 v-model="formInline.password"
                 placeholder="Contraseña"
+                prefix="ios-lock-outline"
               >
-                <Icon size="20" type="ios-lock-outline" slot="prepend"></Icon>
+                <!-- <Icon size="20" type="ios-lock-outline" slot="prepend"></Icon> -->
               </Input>
             </FormItem>
             <FormItem prop="confirmPassword">
@@ -62,8 +95,9 @@
                 type="password"
                 v-model="formInline.confirmPassword"
                 placeholder="Confirmar contraseña"
+                prefix="ios-lock-outline"
               >
-                <Icon size="20" type="ios-lock-outline" slot="prepend"></Icon>
+                <!-- <Icon size="20" type="ios-lock-outline" slot="prepend"></Icon> -->
               </Input>
             </FormItem>
             <FormItem>
@@ -71,6 +105,7 @@
                 class="margin-27"
                 type="success"
                 @click="handleSubmit('formInline')"
+                :disable="disable"
                 >CREAR CUENTA</Button
               >
             </FormItem>
@@ -81,6 +116,7 @@
   </Row>
 </template>
 <script>
+import { signup, signin, getDistricts } from "../server/index";
 export default {
   name: "register",
   data() {
@@ -94,17 +130,31 @@ export default {
       }
     };
     return {
+      districts: [],
       formInline: {
-        user: "",
-        identityDoc: "",
+        fullname: "",
+        dni: "",
         address: "",
-        district: "",
+        district_id: Number,
+        gender: "",
         email: "",
         password: "",
-        confirmPassword: ""
+        confirmPassword: "",
+        disable: false
       },
+      // formInline: {
+      //   fullname: "Andrea",
+      //   dni: "76282636",
+      //   address: "Calle 123",
+      //   district: "",
+      //   district_id: Number,
+      //   gender: "F",
+      //   email: "andreale17@icloud.com",
+      //   password: "Andrea123",
+      //   confirmPassword: "Andrea123"
+      // },
       ruleInline: {
-        user: [
+        fullname: [
           {
             required: true,
             message: "Por favor, escriba su nombre completo",
@@ -119,14 +169,14 @@ export default {
           },
           {
             type: "string",
-            min: 6,
+            min: 8,
             message:
-              "Por favor, escriba una contraseña con más de 6 caracteres",
+              "Por favor, escriba una contraseña con más de 8 caracteres",
             trigger: "blur"
           }
         ],
         confirmPassword: [{ validator: validatePassCheck, trigger: "blur" }],
-        identityDoc: [
+        dni: [
           {
             required: true,
             message: "Por favor, ingrese el Nº de su documento",
@@ -154,6 +204,13 @@ export default {
             trigger: "blur"
           }
         ],
+        gender: [
+          {
+            required: true,
+            message: "Por favor, seleccione cómo se identifica",
+            trigger: "blur"
+          }
+        ],
         email: [
           {
             required: true,
@@ -173,13 +230,70 @@ export default {
     handleSubmit(name) {
       this.$refs[name].validate(valid => {
         if (valid) {
-          this.$Message.success("Bienvenido a 5las!");
-          this.$router.push({ path: "where" });
+          this.disable = true;
+          delete this.formInline.district;
+          signup(this.formInline)
+            .then(res => {
+              console.log(res);
+              if (res.message == "Request failed with status code 409") {
+                this.disable = false;
+                this.$Notice.error({
+                  title: "Revise sus datos",
+                  desc:
+                    "Por favor, revise si ya tiene ya una cuenta registrada asociada a su identidad"
+                });
+              } else {
+                let loginForm = {
+                  email: this.formInline.email,
+                  password: this.formInline.password
+                };
+                signin(loginForm)
+                  .then(res => {
+                    console.log(res.statusCode);
+                    if (res.status == 201) {
+                      this.$Message.success("Bienvenido a 5las!");
+                      this.$router.push({ path: "where" });
+                      console.log(res);
+                      localStorage.setItem(
+                        "token",
+                        JSON.stringify(res.data.accessToken)
+                      );
+                    } else if (res.statusCode == 401) {
+                      this.$Message.error(
+                        "Verifica si estás registrado o si tu clave es correcta"
+                      );
+                    } else {
+                      this.$Message.error("Verifica los datos o regístrate");
+                    }
+                  })
+                  .catch(err => {
+                    this.$Message.error({ title: err });
+                  });
+              }
+            })
+            .catch(err => {
+              console.log(err);
+              this.$Notice.error({
+                title: "Revise si tiene ya una cuenta registrada"
+              });
+            });
         } else {
           this.$Notice.error({ title: "Revise los datos ingresados" });
         }
       });
+    },
+    getDistricts() {
+      getDistricts().then(res => {
+        this.districts = res.data;
+      });
+    },
+    setDistrict(val) {
+      this.formInline.district_id = parseInt(val);
+      // console.log("xxxxxxx");
     }
+  },
+  mounted() {
+    this.getDistricts();
   }
 };
 </script>
@@ -189,14 +303,15 @@ export default {
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,500,600,900&display=swap");
 
 #form-register .ivu-input {
-  color: #fff !important;
+  /* color: #fff !important; */
   box-sizing: border-box;
-  border-top-right-radius: 30px !important;
+  border-radius: 30px;
+  /* border-top-right-radius: 30px !important;
   border-bottom-right-radius: 30px;
   border-top-left-radius: 1px !important;
-  border-bottom-left-radius: 1px !important;
-  border-left: 1px solid transparent;
-  padding: 2em 1em;
+  border-bottom-left-radius: 1px !important; */
+  /* border-left: 1px solid transparent; */
+  /* padding: 2em 1em; */
 }
 .margin-45 {
   margin-top: 10px;
@@ -219,20 +334,6 @@ export default {
   letter-spacing: 0.5px;
   color: #000000;
   margin-bottom: 45px;
-}
-#form-register .ivu-input-group-prepend {
-  /* border: 1px solid #00dfc4; */
-  border-right: none;
-  background-color: transparent !important;
-  box-sizing: border-box;
-  border-radius: 30px;
-  border-left: none;
-  color: black;
-  /* padding: 0 2px !important; */
-}
-
-#form-register .ivu-input-group-prepend .ivu-icon {
-  padding-left: 5px !important;
 }
 
 .f-black:hover {

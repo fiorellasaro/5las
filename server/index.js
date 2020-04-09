@@ -1,33 +1,92 @@
-const express = require('express')
-const consola = require('consola')
-const { Nuxt, Builder } = require('nuxt')
-const app = express()
+var axios = require('axios');
+var localStorage = require('localStorage');
+let api = axios.create({
+  method: 'get',
+  headers: {
+    'content-type': 'application/json; charset=utf-8',
+    'Authorization': localStorage.getItem('Auth')
+  },
+  timeout: 40000,
+  withCredentials: false,
+  responseType: 'json',
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
+  onUploadProgress: function (progressEvent) {
+    // Do whatever you want with the native progress event
+  },
 
-// Import and Set Nuxt.js options
-const config = require('../nuxt.config.js')
-config.dev = process.env.NODE_ENV !== 'production'
+  // `onDownloadProgress` allows handling of progress events for downloads
+  onDownloadProgress: function (progressEvent) {
+    // Do whatever you want with the native progress event
+  },
 
-async function start () {
-  // Init Nuxt.js
-  const nuxt = new Nuxt(config)
+  // `maxContentLength` defines the max size of the http response content allowed
+  maxContentLength: 2000000,
 
-  const { host, port } = nuxt.options.server
+  // `maxRedirects` defines the maximum number of redirects to follow in node.js.
+  // If set to 0, no redirects will be followed.
+  maxRedirects: 3, // default
+});
 
-  await nuxt.ready()
-  // Build only in dev mode
-  if (config.dev) {
-    const builder = new Builder(nuxt)
-    await builder.build()
+export const signup = async (userInfo) => {
+  console.log(userInfo)
+  try {
+    const res = await api.post(`http://5las.renatocenteno.com/auth/signup`, userInfo)
+    Object.assign(api.defaults, { headers: { Authorization: res.data.id } })
+    return res
+  } catch (error) {
+    return error
   }
-
-  // Give nuxt middleware to express
-  app.use(nuxt.render)
-
-  // Listen the server
-  app.listen(port, host)
-  consola.ready({
-    message: `Server listening on http://${host}:${port}`,
-    badge: true
-  })
 }
-start()
+
+export const signin = async (userCredentials) => {
+  try {
+    const res = await api.post(`http://5las.renatocenteno.com/auth/signin`, userCredentials)
+
+    return res
+  } catch (error) {
+    return error
+  }
+}
+
+export const getDistricts = async () => {
+  try {
+    const res = await api.get(`http://5las.renatocenteno.com/companies/districts/1501`)
+
+    return res
+  } catch (error) {
+    return error
+  }
+}
+
+export const getCompany = async (district, token) => {
+  try {
+    Object.assign(api.defaults, { headers: { Authorization: `Bearer ${token}` } })
+    const res = await api.get(`http://5las.renatocenteno.com/companies/byDistrict/${district}`)
+    return res
+  } catch (error) {
+    return error
+  }
+}
+
+export const schedule = async (turn, token) => {
+  try {
+    Object.assign(api.defaults, { headers: { Authorization: `Bearer ${token}` } })
+    const res = await api.get(`http://5las.renatocenteno.com/companies/branch/${turn}/schedule`)
+    return res
+  } catch (error) {
+    return error
+  }
+}
+
+export const generateQR = async (turn, token) => {
+  try {
+    const res = await api.post(`http://5las.renatocenteno.com/tickets/generate`, turn)
+    return res
+  } catch (error) {
+    return error
+  }
+}
+
+export default api
+
