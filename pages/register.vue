@@ -130,27 +130,27 @@ export default {
     };
     return {
       districts: [],
-      // formInline: {
-      //   fullname: "",
-      //   dni: "",
-      //   address: "",
-      //   district_id: Number,
-      //   gender: "",
-      //   email: "",
-      //   password: "",
-      //   confirmPassword: ""
-      // },
       formInline: {
-        fullname: "Andrea",
-        dni: "76282636",
-        address: "Calle 123",
-        district: "",
+        fullname: "",
+        dni: "",
+        address: "",
         district_id: Number,
-        gender: "F",
-        email: "andreale17@icloud.com",
-        password: "Andrea123",
-        confirmPassword: "Andrea123"
+        gender: "",
+        email: "",
+        password: "",
+        confirmPassword: ""
       },
+      // formInline: {
+      //   fullname: "Andrea",
+      //   dni: "76282636",
+      //   address: "Calle 123",
+      //   district: "",
+      //   district_id: Number,
+      //   gender: "F",
+      //   email: "andreale17@icloud.com",
+      //   password: "Andrea123",
+      //   confirmPassword: "Andrea123"
+      // },
       ruleInline: {
         fullname: [
           {

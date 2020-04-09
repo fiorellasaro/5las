@@ -85,8 +85,8 @@ export default {
   data() {
     return {
       loginForm: {
-        email: "andreale17@icloud.com",
-        password: "Andrea123"
+        email: "",
+        password: ""
       },
       loginFormValidate: {
         email: [
