@@ -20,7 +20,7 @@ let api = axios.create({
     // Do whatever you want with the native progress event
   },
 
-  // `maxContentLength` defines the max size of the http response content allowed
+  // `maxContentLength` defines the max size of the https response content allowed
   maxContentLength: 2000000,
 
   // `maxRedirects` defines the maximum number of redirects to follow in node.js.
@@ -31,7 +31,7 @@ let api = axios.create({
 export const signup = async (userInfo) => {
   console.log(userInfo)
   try {
-    const res = await api.post(`http://5las.renatocenteno.com/auth/signup`, userInfo)
+    const res = await api.post(`https://5las.renatocenteno.com/auth/signup`, userInfo)
     Object.assign(api.defaults, { headers: { Authorization: res.data.id } })
     return res
   } catch (error) {
@@ -41,7 +41,7 @@ export const signup = async (userInfo) => {
 
 export const signin = async (userCredentials) => {
   try {
-    const res = await api.post(`http://5las.renatocenteno.com/auth/signin`, userCredentials)
+    const res = await api.post(`https://5las.renatocenteno.com/auth/signin`, userCredentials)
 
     return res
   } catch (error) {
@@ -51,7 +51,7 @@ export const signin = async (userCredentials) => {
 
 export const getDistricts = async () => {
   try {
-    const res = await api.get(`http://5las.renatocenteno.com/companies/districts/1501`)
+    const res = await api.get(`https://5las.renatocenteno.com/companies/districts/1501`)
 
     return res
   } catch (error) {
@@ -62,7 +62,7 @@ export const getDistricts = async () => {
 export const getCompany = async (district, token) => {
   try {
     Object.assign(api.defaults, { headers: { Authorization: `Bearer ${token}` } })
-    const res = await api.get(`http://5las.renatocenteno.com/companies/byDistrict/${district}`)
+    const res = await api.get(`https://5las.renatocenteno.com/companies/byDistrict/${district}`)
     return res
   } catch (error) {
     return error
@@ -72,7 +72,7 @@ export const getCompany = async (district, token) => {
 export const schedule = async (turn, token) => {
   try {
     Object.assign(api.defaults, { headers: { Authorization: `Bearer ${token}` } })
-    const res = await api.get(`http://5las.renatocenteno.com/companies/branch/${turn}/schedule`)
+    const res = await api.get(`https://5las.renatocenteno.com/companies/branch/${turn}/schedule`)
     return res
   } catch (error) {
     return error
@@ -81,7 +81,7 @@ export const schedule = async (turn, token) => {
 
 export const generateQR = async (turn, token) => {
   try {
-    const res = await api.post(`http://5las.renatocenteno.com/tickets/generate`, turn)
+    const res = await api.post(`https://5las.renatocenteno.com/tickets/generate`, turn)
     return res
   } catch (error) {
     return error
