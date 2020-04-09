@@ -78,7 +78,7 @@
 </template>
 <script>
 import localStorage from "localStorage";
-import { schedule } from "../server/index";
+import { generateQR, schedule } from "../server/index";
 export default {
   name: "where",
   data() {
@@ -125,13 +125,18 @@ export default {
     handleSubmit(name) {
       this.$refs[name].validate(valid => {
         if (valid) {
-          this.$Message.success("Bienvenido a 5las!");
           for (let i = 0; i < this.hours.length; i++) {
             if (this.hours[i][1] == localStorage.getItem("hour")) {
-              console.log(this.hours[i][0]);
               schedule(this.hours[i][0], this.token).then(res => {
                 console.log(res);
-                this.$router.push({ path: "QR" });
+                let turn = {
+                  turnId: JSON.parse(res.data.id)
+                };
+                generateQR(turn, this.token).then(res => {
+                  console.log(res);
+                  localStorage.setItem("qr", res.data);
+                  this.$router.push({ path: "QR" });
+                });
               });
             }
           }

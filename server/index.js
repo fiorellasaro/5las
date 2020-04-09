@@ -79,9 +79,9 @@ export const schedule = async (turn, token) => {
   }
 }
 
-export const generateTicket = async (turn, token) => {
+export const generateQR = async (turn, token) => {
   try {
-    const res = await api.post(`http://5las.renatocenteno.com/companies/branch/${turn}/schedule`)
+    const res = await api.post(`http://5las.renatocenteno.com/tickets/generate`, turn)
     return res
   } catch (error) {
     return error

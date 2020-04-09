@@ -198,6 +198,7 @@ export default {
       this.district = decoded.district;
       localStorage.setItem("name", this.name);
       localStorage.setItem("district", this.district.name);
+      localStorage.setItem("identityDocumentNumber", decoded.dni);
       this.whereForm.district = this.district.id;
     } else {
       this.$router.push({ path: "login" });
