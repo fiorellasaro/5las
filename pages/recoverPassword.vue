@@ -3,7 +3,7 @@
     <br />
     <Row type="flex" justify="start">
       <Col :xs="24" :lg="{ span: 2, offset: 1 }">
-        <nuxt-link to="/where" class="f-black">
+        <nuxt-link to="/login" class="f-black">
           <div>
             <Icon type="md-arrow-back" size="30" />
             <span>Volver</span>
