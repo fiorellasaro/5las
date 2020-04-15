@@ -93,11 +93,19 @@
   font-size: 25px;
 }
 
+.f-12 {
+  font-size: 12px;
+}
+
 .ivu-input {
   border-radius: 30px !important;
   padding: 2em 3.5em;
   background-color: #f4f9fc;
   /* border-color: #dc050e; */
+}
+
+.iconos-off {
+  color: #a4b3c1;
 }
 .ivu-select-selection {
   background-color: #f4f9fc;
@@ -142,6 +150,7 @@
   }
   .lg-f-52 {
     font-size: 52px;
+    margin-top: 25px;
   }
   .lg-mt-30 {
     margin-top: 30px;

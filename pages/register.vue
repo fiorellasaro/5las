@@ -4,7 +4,7 @@
       <Row>
         <Col :xs="24" :lg="{ span: 1, offset: 1 }">
           <nuxt-link to="/" class="f-black"
-            ><Icon type="md-arrow-back" class="margin-45" size="30"
+            ><Icon type="md-arrow-back" size="30"
           /></nuxt-link>
         </Col>
         <Col :xs="24" :lg="{ span: 10, offset: 5 }" class="lg-mt-30">
@@ -105,7 +105,7 @@
                 class="margin-27"
                 type="success"
                 @click="handleSubmit('formInline')"
-                :disable="disable"
+                :loading="disable"
                 >CREAR CUENTA</Button
               >
             </FormItem>
@@ -139,9 +139,9 @@ export default {
         gender: "",
         email: "",
         password: "",
-        confirmPassword: "",
-        disable: false
+        confirmPassword: ""
       },
+      disable: false,
       // formInline: {
       //   fullname: "Andrea",
       //   dni: "76282636",
@@ -170,8 +170,7 @@ export default {
           {
             type: "string",
             min: 8,
-            message:
-              "Por favor, escriba una contraseña con más de 8 caracteres",
+            message: "La contraseña debe tener como mínimo 8 caracteres",
             trigger: "blur"
           }
         ],
@@ -258,10 +257,12 @@ export default {
                         "token",
                         JSON.stringify(res.data.accessToken)
                       );
-                    } else if (res.statusCode == 401) {
-                      this.$Message.error(
-                        "Verifica si estás registrado o si tu clave es correcta"
-                      );
+                    } else if (
+                      res.statusCode == 401 ||
+                      res.statusCode == 400 ||
+                      res.statusCode == 409
+                    ) {
+                      this.$Message.error("Verifica si ya estás registrado");
                     } else {
                       this.$Message.error("Verifica los datos o regístrate");
                     }
@@ -312,10 +313,6 @@ export default {
   border-bottom-left-radius: 1px !important; */
   /* border-left: 1px solid transparent; */
   /* padding: 2em 1em; */
-}
-.margin-45 {
-  margin-top: 10px;
-  margin-bottom: 45px !important;
 }
 
 .margin-27 {

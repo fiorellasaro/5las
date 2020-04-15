@@ -3,16 +3,20 @@
     <Row type="flex" justify="center">
       <Col :xs="24" class="bg-red">
         <Row type="flex" justify="center">
-          <Col :lg="{ span: 3, offset: 6 }">
+          <Col :lg="{ span: 2, offset: 7 }">
             <img src="../assets/icons/icon.jpeg" class="circle" />
           </Col>
 
-          <Col class="f-white  f-em m-auto">
+          <Col
+            :xs="{ span: 12 }"
+            :lg="{ span: 9 }"
+            class="f-white  f-em m-auto"
+          >
             <span class="semi-bold">{{ this.name }}</span
             ><br />
             <span>Lima - {{ this.district.name }}</span></Col
           >
-          <Col :lg="{ span: 1, offset: 6 }">
+          <Col :lg="{ span: 1 }">
             <p @click="exit">
               <a class="f-white bold"><br />SALIR</a>
             </p>
