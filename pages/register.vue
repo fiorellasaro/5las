@@ -1,6 +1,7 @@
 <template>
   <Row type="flex" justify="center" class="code-row-bg">
     <Col :xs="22" :lg="24">
+      <br />
       <Row>
         <Col :xs="24" :lg="{ span: 1, offset: 1 }">
           <nuxt-link to="/" class="f-black"

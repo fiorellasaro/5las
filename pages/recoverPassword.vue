@@ -1,5 +1,6 @@
 <template>
   <section>
+    <br />
     <Row type="flex" justify="start">
       <Col :xs="24" :lg="{ span: 2, offset: 1 }">
         <nuxt-link to="/where" class="f-black">
@@ -17,8 +18,8 @@
     <Row type="flex" justify="center">
       <Col :xs="22" :lg="{ span: 10 }">
         <Row>
-          <Col :xs="12">
-            <h1 class="title">Recuperar Contraseña</h1>
+          <Col :xs="12" :lg="24">
+            <h1 class="title left">Recuperar Contraseña</h1>
           </Col>
         </Row>
         <Form
