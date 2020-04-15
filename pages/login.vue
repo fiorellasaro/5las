@@ -5,7 +5,6 @@
         <Row>
           <Col class="float" :xs="{ span: 24 }" :lg="{ span: 12 }">
             <p class="font-25 lg-f-white lg-f-52">
-              <br />
               Bienvenido a <br /><span class="semi-bold">5las</span>
             </p>
           </Col>
@@ -34,11 +33,13 @@
                       placeholder="Ingresa tu clave"
                     ></Input>
                   </FormItem>
-                  <!-- <Row type="flex" justify="end">
+                  <Row type="flex" justify="end">
                     <Col class="mt-less">
-                      <a href="" class="f-black">¿Olvidaste tu contraseña?</a>
+                      <nuxt-link to="/recoverPassword">
+                        <a class="f-black">¿Olvidaste tu contraseña?</a>
+                      </nuxt-link>
                     </Col>
-                  </Row> -->
+                  </Row>
                 </Col>
                 <br />
                 <Col :xs="24" :lg="8">

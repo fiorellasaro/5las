@@ -8,7 +8,6 @@
 
     <br />
     <br />
-    <br />
 
     <Row type="flex" justify="center" align="bottom">
       <Col :xs="22" :sm="16" :md="10" :lg="6">

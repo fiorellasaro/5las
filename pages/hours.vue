@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section id="hours">
     <Row type="flex" justify="center">
       <Col :xs="24" :lg="24" class="bg-red">
         <Row type="flex" justify="center">
@@ -15,18 +15,18 @@
         </Row>
       </Col>
     </Row>
-
+    <br />
     <Row type="flex" justify="start">
       <Col :xs="24" :lg="{ span: 2, offset: 1 }">
         <nuxt-link to="/where" class="f-black">
-          <div class="flex-back-content">
-            <Icon type="md-arrow-back" class="margin-45" size="30" />
+          <div>
+            <Icon type="md-arrow-back" size="30" />
             <span>Volver</span>
           </div>
         </nuxt-link>
       </Col>
     </Row>
-
+    <br />
     <Row type="flex" justify="center">
       <Col :xs="22" :lg="{ span: 10 }">
         <h1 class="title">¡Ya estamos cerca!</h1>
@@ -192,15 +192,6 @@ export default {
   margin-bottom: 32px;
   align-items: center;
 }
-
-.flex-back-content {
-  display: flex;
-  flex-direction: row;
-  justify-content: left;
-  margin-bottom: 35px;
-  margin-top: 10px;
-  align-items: center;
-}
 .flex-info-market {
   display: flex;
   flex-direction: column;
@@ -213,5 +204,10 @@ export default {
 
 .width-candy {
   width: 50px;
+}
+
+#hours .ivu-select-single .ivu-select-selection .ivu-select-placeholder,
+#hours .ivu-select-single .ivu-select-selection .ivu-select-selected-value {
+  line-height: 45px !important;
 }
 </style>
